@@ -1,0 +1,90 @@
+{% extends "./base.html" %}
+
+{% block title %} Gestion de cursos {% endblock %}
+
+{% block body %}
+    
+    
+
+    
+    <div class="row pt-2">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong class="text-dark">{{ message }}</strong>
+
+            </div>
+            {% endfor %}
+            {% endif %}
+           <h2>Gestion de Curso</h2>
+           <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+              <h4 class="card-title">Success card title</h4>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <form action="/registrarCurso/" method="POST">{% csrf_token %}
+                <div class="form-group">
+                    <input type="text" id="txtCodigo" name="txtCodigo" class="form-control" placeholder="Codigo" minlength="6" maxlength="6" required>
+                
+                </div>
+                <div class="form-group mt-3">
+                    <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre"  maxlength="50" required>
+                    
+                </div>
+                <div class="form-group mt-3">
+                    <input type="text" id="numCreditos" name="numCreditos" class="form-control" min="1" max="9" value="1" required>
+                    
+                </div>
+                <div class="form-group mt-3 text-center">
+                    <button type="submit" class="btn btn-warning ">
+                        Guardar
+                    </button>
+                    
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+            <h1>Listado de Cursos</h1>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Creditos</th>
+                        <th scope="col" colspan="2" class="">Opciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in cursos %}
+                           
+                      <tr class="table-warning">
+                            <td scope="row">{{forloop.counter}}</td>
+                            <td scope="row">{{c.codigo}}</td>
+                            <td scope="row">{{c.nombre}}</td>
+                            <td scope="row">{{c.creditos}}</td>
+                            <td scope="row"><a href="edicionCurso/{{ c.codigo }}" class="btn btn-success">Editar</a>
+                                <a href="eliminarCurso/{{ c.codigo }}" class="btn btn-danger btnEliminacion" >Eliminar</a>
+                    
+                            
+                            
+                            </td>
+                        
+                      </tr>
+                      {% endfor %}
+                        
+                     
+                    </tbody>
+                  </table>
+            </div>
+        
+        </div>
+    </div>
+{% endblock %}
+
+
